@@ -26,3 +26,5 @@ CSRF_SESSION_KEY = "secret"
 SECRET_KEY = "secret"
 
 # ADMINS = frozenset(['youremail@yourdomain.com'])
+
+SESSION_COOKIE_NAME = 'todo-app'

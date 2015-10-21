@@ -1,22 +1,29 @@
 {
-  "name": "flask-backbone-todo",
-  "version": "1.0.0",
-  "description": "Flask and backbone todo app",
-  "keywords": [
-    "backbone",
-    "frontend"
-  ],
-  "scripts": {},
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:cfierro/todo.git"
-  },
-  "devDependencies": {},
-  "dependencies": {
-    "backbone": "^1.1.3",
-    "jquery": "^2.1.4",
-    "underscore": "^1.8.3",
-    "lodash": "^3.10.1"
-  }
+    "name": "flask-backbone-todo",
+    "version": "1.0.0",
+    "description": "Flask and backbone todo app",
+    "keywords": [
+        "backbone",
+        "frontend"
+    ],
+    "scripts": {
+        "build": "browserify ./js/src/main.js -o ./app/static/js/main.js",
+        "watch": "watchify ./js/src/main.js -o ./app/static/js/main.js -dv",
+        "server": "source ./env/bin/activate && python run.py",
+        "start": "npm run watch & npm run server"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:cfierro/todo.git"
+    },
+    "devDependencies": {
+        "browserify": "^11.2.0",
+        "watchify": "^3.4.0"
+    },
+    "dependencies": {
+        "backbone": "^1.1.3",
+        "jquery": "^2.1.4",
+        "underscore": "^1.8.3"
+    }
 }
