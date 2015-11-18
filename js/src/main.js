@@ -1,3 +1,4 @@
-var ListView = require('./View/ListView.js');
+var AppView = require('./View/AppView.js');
 
-var listView = new ListView();
+var appView = new AppView();
+

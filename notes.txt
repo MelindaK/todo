@@ -1,0 +1,14 @@
+get todolist view to render - success!
+
+change templates so views are appended to default HTML rather than being dependent on each other
+
+
+
+
+create a login screen
+
+Create our item view
+Create item model
+create item collection
+
+Get items to render
