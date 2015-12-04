@@ -1,14 +1,13 @@
-get todolist view to render - success!
-
-change templates so views are appended to default HTML rather than being dependent on each other
-
-
-
+create a way to make and delete lists and items and users.
 
 create a login screen
 
-Create our item view
-Create item model
-create item collection
+ADD EVENT LISTENER TO EVENTS
 
-Get items to render
+Veronica makes it pretty.
+
+
+
+
+
+
