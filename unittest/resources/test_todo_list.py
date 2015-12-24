@@ -146,7 +146,7 @@ class TestTodoList_post(TestTodoList):
             'name': 'Test List'
             }
 
-        resp = self.client.post('/todolists/', data=todoList)
+        resp = self.client.post('/todolists/', data=json.dumps(todoList), content_type='application/json')
 
         assert resp.status_code == 200
         assert json.loads(resp.data) == {
@@ -170,7 +170,7 @@ class TestTodoList_post(TestTodoList):
 
         todoList = {}
 
-        resp = self.client.post('/todolists/', data=todoList)
+        resp = self.client.post('/todolists/', data=json.dumps(todoList), content_type='application/json')
 
         assert resp.status_code == 400
         assert json.loads(resp.data) == {

@@ -19,7 +19,10 @@ var TodoListView = Backbone.View.extend({
     tagName: 'div',
     className: 'todo-list-container',
 
-    events: {},
+    events: {
+        'click .deleteList': 'deleteList',
+        'keypress .todo': 'addTodo',
+    },
 
     initialize: function(){
         // create todoList model
@@ -30,13 +33,21 @@ var TodoListView = Backbone.View.extend({
         this.todos.fetch({
             success: _.bind(function(model){
                 console.log('Success: Todos loaded.');
+                var todoListId = this.model.id;
+                if (this.todos.length === 0) {
+                    var placeholderTodo = new TodoModel({
+                        subject: 'subject',
+                        todoListId: todoListId
+                    });
+                    this.todos.add(placeholderTodo);
+                }
                 this.renderTodos();
+
             }, this),
             error: function(){
                 console.log('Error: Todos failed to load.');
             }
         })
-
 
     },
 
@@ -53,7 +64,44 @@ var TodoListView = Backbone.View.extend({
             })
             this.el.querySelector('ul').appendChild(todoView.el)
         }, this)
-    }
+    },
+
+    deleteList: function(){
+        this.model.destroy();
+        this.el.parentNode.removeChild(this.el);
+    },
+
+    addTodo: function(e){
+        var code = e.keyCode;
+        var lastItem = this.el.querySelector('ul li:last-child input.todo');
+        debugger;
+        if (code === 13) {
+            if (e.currentTarget === lastItem) {
+
+                var todoListId = this.model.id;
+
+                var newTodo = new TodoModel({
+                    subject: 'subject',
+                    todoListId: todoListId
+                })
+
+                newTodo.save(null, {
+                    success: _.bind(function(model) {
+                        console.log('Success: todo created.');
+
+                        this.todos.add(newTodo);
+                        var todoView = new TodoView({
+                            model: newTodo
+                        })
+                        this.el.querySelector('ul').appendChild(todoView.el)
+                    }, this),
+                    error: function(){
+                        console.log('Error: todo not created.');
+                    }
+                })
+            }
+        }
+    },
 })
 
 module.exports = TodoListView;

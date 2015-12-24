@@ -1,3 +1,5 @@
+import json
+
 from flask import request, session
 from flask_restful import Resource
 from sqlalchemy import and_
@@ -44,10 +46,11 @@ class TodoMultiResource(Resource):
     def post(self):
         """Method adds a new todo and returns the todo in an OK response..
         """
+        data = json.loads(request.data)
         userId = session.get('userId')
-        todoListId = request.form.get('todoListId')
+        todoListId = data.get('todoListId')
 
-        if not(request.form.get('subject') and todoListId):
+        if not(data.get('subject') and todoListId):
             raise status.BadRequest()
 
         permission = TodoListPermission.query.filter(
@@ -57,14 +60,14 @@ class TodoMultiResource(Resource):
         if permission is None:
             raise status.Forbidden()
 
-        todo = Todo(request.form.get('subject'),
+        todo = Todo(data.get('subject'),
                     todoListId,
                     userId,
-                    request.form.get('dueDate'),
-                    request.form.get('description'),
-                    request.form.get('priority'),
-                    request.form.get('completed'),
-                    request.form.get('assigneeId'))
+                    data.get('dueDate'),
+                    data.get('description'),
+                    data.get('priority'),
+                    data.get('completed'),
+                    data.get('assigneeId'))
         db.session.add(todo)
         db.session.commit()
 
@@ -81,6 +84,7 @@ class TodoResource(Resource):
         Args:
             todoId - Interger, primary key identifying the todo.
         """
+        data = json.loads(request.data)
         userId = session.get('userId')
         todo = Todo.query.get(todoId)
 
@@ -94,12 +98,15 @@ class TodoResource(Resource):
         if permission is None:
             raise status.Forbidden()
 
-        todo.subject = request.form.get('subject') or todo.subject
-        todo.dueDate = request.form.get('dueDate') or todo.dueDate
-        todo.description = request.form.get('description') or todo.description
-        todo.priority = request.form.get('priority') or todo.priority
-        todo.completed = request.form.get('completed') or todo.completed
-        todo.assigneeId = request.form.get('assigneeId') or todo.assigneeId
+        todo.subject = data.get('subject') or todo.subject
+        todo.dueDate = data.get('dueDate') or todo.dueDate
+        todo.description = data.get('description') or todo.description
+        todo.priority = data.get('priority') or todo.priority
+        todo.assigneeId = data.get('assigneeId') or todo.assigneeId
+
+        todo.completed = data.get('completed') \
+            if data.get('completed') != todo.completed \
+            else todo.completed
 
         db.session.commit()
 

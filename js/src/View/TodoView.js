@@ -11,7 +11,11 @@ var todoViewTemplate = require('../templates/todo.hbs');
 
 var TodoView = Backbone.View.extend({
     tagName: 'li',
-    events: {},
+    events: {
+        'keypress .todo': 'updateTodo',
+        'click .deleteTodo': 'deleteTodo',
+        'click .todoCheckBox': 'markComplete',
+    },
 
     initialize: function(){
         // this.todo = new TodoModel();
@@ -21,7 +25,25 @@ var TodoView = Backbone.View.extend({
     render: function(){
         var todo = this.model.toJSON();
         this.el.innerHTML = todoViewTemplate({subject: todo.subject});
-    }
+    },
+
+    updateTodo: function(e){
+        var code = e.keyCode
+        var newSubject = e.currentTarget.value;
+
+        if (code === 13) {
+            this.model.save({"subject": newSubject});
+        }
+    },
+
+    deleteTodo: function(){
+        this.model.destroy();
+        this.el.parentNode.removeChild(this.el);
+    },
+
+    markComplete: function(){
+        this.model.save({"completed": !this.model.get('completed')})
+    },
 })
 
 module.exports = TodoView;

@@ -17,8 +17,7 @@ var AppView = Backbone.View.extend({
     },
 
     initialize: function(){
-        // access user model (get logged-in user name)
-        // Also we need a loggin screen
+
         this.render();
 
         this.user = new UserModel();
@@ -67,14 +66,20 @@ var AppView = Backbone.View.extend({
             name: "name",
         })
 
-        newList.save();
-        this.todoLists.add(newList);
+        newList.save(null, {
+            success: _.bind(function(model) {
+                console.log('Success: todoList created.');
 
-        var todoListView = new TodoListView({
-            model: newList
-        })
-        //Something weird going on here!
-        this.el.querySelector('.todo-lists-container').appendChild(todoListView.el)
+                this.todoLists.add(newList);
+                var todoListView = new TodoListView({
+                    model: newList
+                })
+                this.el.querySelector('.todo-lists-container').appendChild(todoListView.el)
+            }, this),
+            error: function(){
+                console.log('Error: todolists not created.');
+            }
+        });
     },
 
 })

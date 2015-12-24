@@ -1,10 +1,17 @@
 var Backbone = require('backbone');
+// var TodoListCollection = require('../Collection/TodoListCollection.js')
 
 var TodoListModel = Backbone.Model.extend({
-    url: '/todolists',
+    urlRoot: '/todolists',
     defaults: {
         name: 'List Name',
         creator: 'User'
+    },
+    parse: function(response, options){
+        if (options.collection) {
+            return response;
+        }
+        return response.result;
     }
 })
 

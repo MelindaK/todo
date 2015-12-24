@@ -1,0 +1,14 @@
+body {
+    background-color: lavendar;
+}
+
+input {
+    border: none;
+}
+input:focus {
+    background-color: #FFF;
+}
+
+ul {
+    list-style: none;
+}

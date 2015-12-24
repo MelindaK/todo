@@ -1,10 +1,12 @@
-create a way to make and delete lists and items and users.
+Fix create new todo
+Update for List names
 
-create a login screen
 
-ADD EVENT LISTENER TO EVENTS
+Redis for ordering lists?
 
-Veronica makes it pretty.
+Create a login screen
+
+Make it pretty.
 
 
 

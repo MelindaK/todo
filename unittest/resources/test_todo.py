@@ -147,7 +147,8 @@ class TestTodo_post(TestTodo):
             'assigneeId': 1
         }
 
-        resp = self.client.post('/todos/?todolist=1', data=todo)
+        resp = self.client.post('/todos/?todolist=1', data=json.dumps(todo),
+                                content_type='application/json')
 
         assert resp.status_code == 200
         assert json.loads(resp.data) == {
@@ -177,7 +178,8 @@ class TestTodo_post(TestTodo):
         self.client.get('/login/%s' % self.user.id)
 
         todo = {}
-        resp = self.client.post('/todos/', data=todo)
+        resp = self.client.post('/todos/', data=json.dumps(todo),
+                                content_type='application/json')
 
         assert resp.status_code == 400
         assert json.loads(resp.data) == {
@@ -208,7 +210,8 @@ class TestTodo_put(TestTodo):
             'completed': 1
         }
 
-        resp = self.client.put('/todos/%s' % todo.id, data=newTodoData)
+        resp = self.client.put('/todos/%s' % todo.id, data=json.dumps(newTodoData),
+                               content_type='application/json')
 
         assert resp.status_code == 200
         assert json.loads(resp.data) == {
@@ -236,8 +239,7 @@ class TestTodo_put(TestTodo):
         """Verify notFound is raised if todo with the given id does not exist.
         """
         self.client.get('/login/%s' % self.user.id)
-
-        resp = self.client.put('/todos/1000')
+        resp = self.client.put('/todos/1000', data='{}', content_type='application/json')
 
         assert resp.status_code == 404
         assert json.loads(resp.data) == {

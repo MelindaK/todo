@@ -1,3 +1,5 @@
+import json
+
 from flask import request, session
 from flask_restful import Resource
 from sqlalchemy import and_
@@ -30,10 +32,12 @@ class TodoListMultiResource(Resource):
     def post(self):
         """Method creates a todoList and returns it in an Ok response.
         """
-        if not(request.form.get('name')):
+        data = json.loads(request.data)
+
+        if not(data.get('name')):
             raise status.BadRequest()
 
-        todoList = TodoList(request.form.get('name'), session.get('userId'))
+        todoList = TodoList(data.get('name'), session.get('userId'))
         db.session.add(todoList)
         db.session.commit()
 
