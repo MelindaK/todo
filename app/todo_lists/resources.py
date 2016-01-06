@@ -60,6 +60,7 @@ class TodoListResource(Resource):
         """
         userId = session.get('userId')
         todoList = TodoList.query.get(todoListId)
+        data = json.loads(request.data)
 
         if todoList is None:
             raise status.NotFound()
@@ -71,7 +72,7 @@ class TodoListResource(Resource):
         if permission is None:
             raise status.Unauthorized()
 
-        todoList.name = request.form.get('name') or todoList.name
+        todoList.name = data.get('name') or todoList.name
         db.session.commit()
 
         return response_util.buildOkResponse(todoList.toDict())

@@ -11,6 +11,7 @@ var todoViewTemplate = require('../templates/todo.hbs');
 
 var TodoView = Backbone.View.extend({
     tagName: 'li',
+    className: 'todoContainer',
     events: {
         'keypress .todo': 'updateTodo',
         'click .deleteTodo': 'deleteTodo',
@@ -33,16 +34,19 @@ var TodoView = Backbone.View.extend({
 
         if (code === 13) {
             this.model.save({"subject": newSubject});
+            e.currentTarget.blur();
         }
     },
 
     deleteTodo: function(){
+
         this.model.destroy();
         this.el.parentNode.removeChild(this.el);
     },
 
     markComplete: function(){
-        this.model.save({"completed": !this.model.get('completed')})
+        this.model.save({"completed": !this.model.get('completed')});
+
     },
 })
 

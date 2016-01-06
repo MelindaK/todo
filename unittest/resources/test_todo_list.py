@@ -204,7 +204,9 @@ class TestTodoList_put(TestTodoList):
             'name': 'Updated List'
         }
 
-        resp = self.client.put('/todolists/%s' % todoList.id, data=newListData)
+        resp = self.client.put('/todolists/%s' % todoList.id,
+                               data=json.dumps(newListData),
+                               content_type='application/json')
 
         assert resp.status_code == 200
         assert json.loads(resp.data) == {
@@ -227,8 +229,8 @@ class TestTodoList_put(TestTodoList):
         """
         self.client.get('/login/%s' % self.user.id)
 
-        resp = self.client.put('/todolists/1000')
-
+        resp = self.client.put('/todolists/1000', data='{}',
+                               content_type='application/json')
         assert resp.status_code == 404
         assert json.loads(resp.data) == {
             'info': {},
@@ -317,7 +319,7 @@ class TestTodoList_delete(TestTodoList):
             'result': {}
         }
 
-    def test_put_unauthorized(self):
+    def test_delete_unauthorized(self):
         """Verify Unauthorized is raise when user is not logged in.
         """
         todoList = TodoList('Test List', 1)

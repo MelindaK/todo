@@ -1,14 +1,34 @@
 body {
-    background-color: lavendar;
-}
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 18px;
+  background: #BAA5D6; }
 
-input {
-    border: none;
-}
-input:focus {
-    background-color: #FFF;
-}
+.todo-app h1 {
+  text-align: center; }
 
-ul {
+.todo-lists-container {
+  width: 50%;
+  margin: 0 auto; }
+  .todo-lists-container ul {
     list-style: none;
-}
+    margin-left: 0;
+    padding-left: 0; }
+
+.listName {
+  outline: none;
+  border: none;
+  background: transparent;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1.5em;
+  text-align: center;
+  width: 80%; }
+  .listName:focus + .deleteList {
+    display: inline-block; }
+
+.todo {
+  outline: none;
+  padding: 3px;
+  width: 80%; }
+
+.addList {
+  margin: 0 auto; }

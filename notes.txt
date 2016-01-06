@@ -1,12 +1,13 @@
-Fix create new todo
-Update for List names
+When all todos are deleted render a button to add new todo
+
+Make it pretty.
 
 
 Redis for ordering lists?
 
 Create a login screen
 
-Make it pretty.
+
 
 
 

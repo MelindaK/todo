@@ -10,7 +10,7 @@
         "build": "browserify -t hbsfy ./js/src/main.js -o ./app/static/js/main.js",
         "watch": "watchify -t hbsfy ./js/src/main.js -o ./app/static/js/main.js -dv",
         "server": "source ./env/bin/activate && python run.py",
-        "start": "npm run watch & npm run server"
+        "start": "npm run watch & npm run server & gulp"
     },
     "license": "MIT",
     "repository": {
@@ -20,7 +20,9 @@
     "devDependencies": {
         "browserify": "^11.2.0",
         "watchify": "^3.4.0",
-        "hbsfy": "^2.4.1"
+        "hbsfy": "^2.4.1",
+        "gulp": "^3.9.0",
+        "gulp-sass": "^2.1.1"
     },
     "dependencies": {
         "backbone": "^1.1.3",
